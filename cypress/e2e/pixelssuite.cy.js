@@ -83,7 +83,7 @@ describe('PixelsSuite Automation Tests', () => {
     // Step 2: Click without uploading file (should NOT download)
     cy.contains(/Download/i).click({ force: true });
 
-    // (Optional check: no crash / UI still stable)
+    // ( check: no crash / UI still stable)
     cy.contains(/Download/i).should('be.visible');
 
     // Step 3: Upload valid PDF
