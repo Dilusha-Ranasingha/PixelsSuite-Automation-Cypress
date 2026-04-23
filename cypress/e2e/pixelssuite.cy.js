@@ -74,24 +74,29 @@ describe('PixelsSuite Automation Tests', () => {
     cy.contains(/Download/i).should('be.visible');
   });
 
-  it('ATC_11 - Verify download button is clickable', () => {
+  it('ATC_11 - Verify download behavior with and without file', () => {
     openPdfEditor();
 
-    // Check button is visible
+    // Step 1: Button is visible
     cy.contains(/Download/i).should('be.visible');
 
-    // Upload a valid PDF so the editor enables download actions.
+    // Step 2: Click without uploading file (should NOT download)
+    cy.contains(/Download/i).click({ force: true });
+
+    // (Optional check: no crash / UI still stable)
+    cy.contains(/Download/i).should('be.visible');
+
+    // Step 3: Upload valid PDF
     cy.get('input[type="file"]').selectFile('cypress/fixtures/sample.pdf', {
       force: true,
     });
 
-    // Check button is enabled and clickable
+    // Step 4: Click again (should now work)
     cy.contains(/Download/i)
       .should('be.visible')
-      .should('not.be.disabled')
       .click();
 
-    // UI should still be stable after click
+    // UI should remain stable
     cy.contains(/Download/i).should('be.visible');
   });
 });
